@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Set;
 
-public class WebDriverGetMethods {
+public class WebDriverMethodsTests {
     WebDriver driver = new ChromeDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     @Test
@@ -57,7 +57,6 @@ public class WebDriverGetMethods {
         Assert.assertTrue(isSelected(By.xpath("//input[@value='Male']")));
         driver.close();
     }
-
     public boolean isEnabled(By element){
        return driver.findElement(element).isEnabled();
     }
