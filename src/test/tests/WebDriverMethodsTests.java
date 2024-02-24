@@ -1,17 +1,29 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Set;
 
 public class WebDriverMethodsTests {
-    WebDriver driver = new ChromeDriver();
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    WebDriver driver;
+    WebDriverWait wait;
+    @BeforeMethod
+    public void driverInitialise(){
+        this.driver = new ChromeDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    }
+    @AfterMethod
+    public void closeDriver(){
+        driver.quit();
+    }
     @Test
     public void getMethods(){
         driver.manage().window().maximize();
@@ -21,17 +33,12 @@ public class WebDriverMethodsTests {
         System.out.println(title);
         String currentUrl = driver.getCurrentUrl();
         System.out.println(currentUrl);
-        String pageSource = driver.getPageSource();
-        //System.out.println(pageSource);
         Actions ac = new Actions(driver);
-//        driver.findElement(By.xpath("//a[contains(text(),'SwitchTo')]")).click();
         ac.moveToElement( driver.findElement(By.xpath("//a[contains(text(),'SwitchTo')]")));
         driver.findElement(By.xpath("//a[contains(text(),'SwitchTo')]")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Windows')]")));
-        driver.findElement(By.xpath("//a[contains(text(),'Windows')]")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='Tabbed']//button")));
-        driver.findElement(By.xpath("//div[@id='Tabbed']//button")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='navbar-brand']")));
+        waitForElementToLoadAndReturn(By.xpath("//a[contains(text(),'Windows')]")).click();
+        waitForElementToLoadAndReturn(By.xpath("//div[@id='Tabbed']//button")).click();
+        waitForPageLoad(By.xpath("//a[@class='navbar-brand']"));
         String currentWindowHandel = driver.getWindowHandle();
         System.out.println(currentWindowHandel);
         Set<String> windowHandles = driver.getWindowHandles();
@@ -39,7 +46,6 @@ public class WebDriverMethodsTests {
         System.out.println(parentWindowHandle);
         windowHandles.iterator().next();
         driver.switchTo().window(currentWindowHandel);
-        driver.close();
     }
 
     @Test
@@ -55,7 +61,7 @@ public class WebDriverMethodsTests {
             clickButton(By.xpath("//input[@value='Male']"));
         }
         Assert.assertTrue(isSelected(By.xpath("//input[@value='Male']")));
-        driver.close();
+        Assert.assertTrue(isDisplayed(By.id("submitbtn")));
     }
     public boolean isEnabled(By element){
        return driver.findElement(element).isEnabled();
@@ -66,7 +72,13 @@ public class WebDriverMethodsTests {
     public boolean isSelected(By element){
         return driver.findElement(element).isSelected();
     }
+    public boolean isDisplayed(By element){
+        return driver.findElement(element).isDisplayed();
+        }
     public void waitForPageLoad(By element){
         wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+    public WebElement waitForElementToLoadAndReturn(By element){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 }

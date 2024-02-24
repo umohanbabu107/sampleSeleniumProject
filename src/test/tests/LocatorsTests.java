@@ -1,13 +1,28 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.OrangeHRMLoginPage;
 
+import java.time.Duration;
+
 public class LocatorsTests {
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver;
+    WebDriverWait wait;
     OrangeHRMLoginPage orangeHRMLoginPage;
+    @BeforeMethod
+    public void driverInitialise(){
+        this.driver = new ChromeDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    }
+    @AfterMethod
+    public void closeDriver(){
+        driver.quit();
+    }
     @Test
     public void locatorsTest(){
         this.orangeHRMLoginPage = new OrangeHRMLoginPage(driver);
