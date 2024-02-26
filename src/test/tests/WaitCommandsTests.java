@@ -14,27 +14,12 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
-public class WaitCommandsTests {
-    WebDriver driver;
-    WebDriverWait wait;
+public class WaitCommandsTests extends BaseTest{
+
     FluentWait<WebDriver> fluentWait;
-    @BeforeMethod
-    public void driverInitialise(){
-        this.driver = new ChromeDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        this.fluentWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofSeconds(5))
-                .ignoring(NoSuchElementException.class);
-    }
-    @AfterMethod
-    public void closeDriver(){
-        driver.quit();
-    }
 
     @Test
     public void implicitWaitTest(){
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://demo.automationtesting.in/Register.html");
         String title = driver.getTitle();
@@ -56,7 +41,6 @@ public class WaitCommandsTests {
     }
     @Test
     public void fluentWaitCommands(){
-        driver.manage().window().maximize();
         driver.get("https://demo.automationtesting.in/Register.html");
         String title = driver.getTitle();
         System.out.println(title);
@@ -76,6 +60,10 @@ public class WaitCommandsTests {
         driver.switchTo().window(currentWindowHandel);
     }
     public WebElement waitForElementToLoad(By element) {
+        this.fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
         fluentWait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver webDriver) {
                 return driver.findElement(element);

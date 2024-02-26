@@ -7,13 +7,9 @@ import org.testng.annotations.Test;
 import pages.OrangeHRMLoginPage;
 
 
-public class LogInTests {
-    WebDriver driver = new ChromeDriver();
-    OrangeHRMLoginPage orangeHRMLoginPage;
-    @AfterTest
-    public void closeDriver(){
+public class LogInTests extends BaseTest{
 
-    }
+    OrangeHRMLoginPage orangeHRMLoginPage;
     @Test
     public void loginTest(){
         this.orangeHRMLoginPage = new OrangeHRMLoginPage(driver);

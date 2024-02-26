@@ -10,19 +10,8 @@ import pages.OrangeHRMLoginPage;
 
 import java.time.Duration;
 
-public class LocatorsTests {
-    WebDriver driver;
-    WebDriverWait wait;
+public class LocatorsTests extends BaseTest{
     OrangeHRMLoginPage orangeHRMLoginPage;
-    @BeforeMethod
-    public void driverInitialise(){
-        this.driver = new ChromeDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-    }
-    @AfterMethod
-    public void closeDriver(){
-        driver.quit();
-    }
     @Test
     public void locatorsTest(){
         this.orangeHRMLoginPage = new OrangeHRMLoginPage(driver);

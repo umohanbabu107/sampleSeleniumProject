@@ -12,21 +12,10 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Set;
 
-public class WebDriverMethodsTests {
-    WebDriver driver;
-    WebDriverWait wait;
-    @BeforeMethod
-    public void driverInitialise(){
-        this.driver = new ChromeDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-    }
-    @AfterMethod
-    public void closeDriver(){
-        driver.quit();
-    }
+public class WebDriverMethodsTests extends BaseTest{
+
     @Test
     public void getMethods(){
-        driver.manage().window().maximize();
         driver.get("https://demo.automationtesting.in/Register.html");
         waitForPageLoad(By.xpath("//div/h1[contains(text(),'Automation Demo Site')]"));
         String title = driver.getTitle();

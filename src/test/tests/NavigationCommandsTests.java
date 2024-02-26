@@ -8,21 +8,10 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class NavigationCommandsTests {
-    WebDriver driver;
-    WebDriverWait wait;
-    @BeforeMethod
-    public void driverInitialise(){
-       this.driver  = new ChromeDriver();
-       this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-    @AfterMethod
-    public void driverQuit(){
-        driver.quit();
-    }
+public class NavigationCommandsTests extends BaseTest{
+
     @Test
     public void navigationCommandTests(){
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://www.amazon.in/");
         Assert.assertTrue(driver.getCurrentUrl().contains("amazon"));
