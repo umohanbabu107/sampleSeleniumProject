@@ -1,7 +1,9 @@
 package masterTestSuite;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -9,6 +11,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class WebTableTests extends BaseTest{
+    public static void main(String[] args){
+        WebTableTests webTableTests = new WebTableTests();
+        webTableTests.dynamicWebTableTests();
+    }
     @Test
     public void staticWebTableTests(){
         driver.get("https://testautomationpractice.blogspot.com/");
@@ -23,6 +29,29 @@ public class WebTableTests extends BaseTest{
         System.out.println(getTableColumnDataByTableHeader("Subject"));
         System.out.println(getTableColumnDataByTableHeader("Price"));
         System.out.println(getTableData());
+    }
+    public void dynamicWebTableTests(){
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://demo.opencart.com/admin/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.findElement(By.id("input-username")).clear();
+        driver.findElement(By.id("input-username")).sendKeys("demo");
+        driver.findElement(By.id("input-password")).clear();
+        driver.findElement(By.id("input-password")).sendKeys("demo");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        //Verification
+        boolean isVerificationPresent = driver.findElement(By.xpath("//input[@type='checkbox']")).isDisplayed();
+        if(isVerificationPresent){
+            driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+        }
+        driver.findElement(By.xpath("//button[@class='btn-close']")).click();
+        driver.findElement(By.id("menu-customer")).click();
+        driver.findElement(By.xpath("//ul[@id='collapse-5']//a[contains(text(),'Customers')]")).click();
+
+        String pagesText = driver.findElement(By.xpath("//div[@class='col-sm-6 text-end']")).getText();
+        int noOfPages = Integer.parseInt(pagesText.split("\\(")[1].split(" ")[0]);
+        System.out.println(noOfPages);
     }
     public HashMap<String,List<String>> getTableColumnDataByTableHeader(String headerName) {
         HashMap<String, List<String>> data = new HashMap<>();
