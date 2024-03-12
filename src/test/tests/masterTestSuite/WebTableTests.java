@@ -30,8 +30,9 @@ public class WebTableTests extends BaseTest{
         System.out.println(getTableColumnDataByTableHeader("Price"));
         System.out.println(getTableData());
     }
+    @Test
     public void dynamicWebTableTests(){
-        WebDriver driver = new ChromeDriver();
+//        WebDriver driver = new ChromeDriver();
         driver.get("https://demo.opencart.com/admin/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(By.id("input-username")).clear();
@@ -41,10 +42,10 @@ public class WebTableTests extends BaseTest{
         driver.findElement(By.xpath("//button[@type='submit']")).click();
 
         //Verification
-        boolean isVerificationPresent = driver.findElement(By.xpath("//input[@type='checkbox']")).isDisplayed();
-        if(isVerificationPresent){
-            driver.findElement(By.xpath("//input[@type='checkbox']")).click();
-        }
+//        boolean isVerificationPresent = driver.findElement(By.xpath("//input[@type='checkbox']")).isDisplayed();
+//        if(isVerificationPresent){
+//            driver.findElement(By.xpath("//input[@type='checkbox']")).click();
+//        }
         driver.findElement(By.xpath("//button[@class='btn-close']")).click();
         driver.findElement(By.id("menu-customer")).click();
         driver.findElement(By.xpath("//ul[@id='collapse-5']//a[contains(text(),'Customers')]")).click();
