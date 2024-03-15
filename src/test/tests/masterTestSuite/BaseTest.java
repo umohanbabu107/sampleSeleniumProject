@@ -16,6 +16,7 @@ public class BaseTest {
     WebDriver driver;
     WebDriverWait wait;
     Actions actions;
+    WebDriver secondDriver;
     @BeforeMethod
     public void driverInitialisation(){
         this.driver = new ChromeDriver();
@@ -26,6 +27,11 @@ public class BaseTest {
     @AfterMethod
     public void driverQuit(){
         driver.quit();
+        secondDriver.quit();
+    }
+    public WebDriver secondDriver(){
+      secondDriver = new ChromeDriver();
+      return secondDriver;
     }
     public WebElement waitForElementToLoadAndReturn(By element){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
