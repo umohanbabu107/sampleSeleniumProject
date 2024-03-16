@@ -27,7 +27,9 @@ public class BaseTest {
     @AfterMethod
     public void driverQuit(){
         driver.quit();
-        secondDriver.quit();
+        if(secondDriver!=null) {
+            secondDriver.quit();
+        }
     }
     public WebDriver secondDriver(){
       secondDriver = new ChromeDriver();
